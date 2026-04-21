@@ -17,9 +17,9 @@ Use Conventional Commits for project history:
 - `fix:` for bug fixes.
 - `docs:` for documentation-only changes.
 - `test:` for test-only changes.
-- `chore:` for release, tooling, and maintenance changes.
+- `chore:` for tooling and maintenance changes.
 
-Release preparation commits should use `chore(release): prepare x.y.z`.
+Release preparation is handled by Release Please through release pull requests. Do not update package versions, `CHANGELOG.md`, or release tags manually. Package publishing runs from the Release Please workflow after a release is created.
 
 Commit messages are checked locally by the Husky `commit-msg` hook through commitlint.
 
