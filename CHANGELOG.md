@@ -1,11 +1,8 @@
 # Changelog
 
-## [1.0.1](https://github.com/alyldas/theme-mode/compare/v1.0.0...v1.0.1) (2026-04-21)
+## 1.0.1
 
-
-### Bug Fixes
-
-* release README badge fix ([81046c5](https://github.com/alyldas/theme-mode/commit/81046c584bb3b503d56c21347c32a036d9dad4ab))
+- Release README badge fix.
 
 ## 1.0.0
 
