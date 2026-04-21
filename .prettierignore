@@ -1,0 +1,5 @@
+.typecheck
+coverage
+dist
+node_modules
+*.tgz

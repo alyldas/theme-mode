@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "ignoreDeprecations": "6.0",
+    "declaration": true,
+    "declarationMap": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["node", "vitest"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "smoke/**/*.test.ts",
+    "tsconfig.build.json",
+    "tsup.config.ts",
+    "vitest.config.ts"
+  ]
+}
