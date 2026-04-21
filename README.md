@@ -47,7 +47,7 @@ Generated from [docs/demo.html](docs/demo.html).
 Install from GitHub Packages:
 
 ```sh
-npm install @alyldas/theme-mode@0.1.1
+npm install @alyldas/theme-mode@0.1.2
 ```
 
 Configure the GitHub Packages registry for the package scope:
@@ -63,7 +63,7 @@ When using `package.json`, keep the dependency as a normal package version:
 ```json
 {
   "dependencies": {
-    "@alyldas/theme-mode": "0.1.1"
+    "@alyldas/theme-mode": "0.1.2"
   }
 }
 ```
