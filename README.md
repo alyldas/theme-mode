@@ -1,6 +1,6 @@
 # Theme Mode
 
-[![Publish](https://github.com/alyldas/theme-mode/actions/workflows/publish.yml/badge.svg)](https://github.com/alyldas/theme-mode/actions/workflows/publish.yml)
+[![CI](https://github.com/alyldas/theme-mode/actions/workflows/ci.yml/badge.svg)](https://github.com/alyldas/theme-mode/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/package-json/v/alyldas/theme-mode?label=version)](https://github.com/alyldas/theme-mode/blob/master/package.json)
 [![License](https://img.shields.io/github/license/alyldas/theme-mode)](https://github.com/alyldas/theme-mode/blob/master/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-ready-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
