@@ -12,21 +12,21 @@
   --theme-mode-toggle-color: currentColor;
   --theme-mode-toggle-hover-bg: rgb(127 127 127 / 0.12);
   --theme-mode-toggle-focus-ring: 0 0 0 3px rgb(127 127 127 / 0.22);
+  align-items: center;
 
   appearance: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--theme-mode-toggle-size);
-  height: var(--theme-mode-toggle-size);
-  padding: 0;
+  background: var(--theme-mode-toggle-bg);
   border: 1px solid var(--theme-mode-toggle-border);
   border-radius: var(--theme-mode-toggle-radius);
-  background: var(--theme-mode-toggle-bg);
   color: var(--theme-mode-toggle-color);
-  font: inherit;
-  line-height: 1;
   cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  height: var(--theme-mode-toggle-size);
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: var(--theme-mode-toggle-size);
 }
 
 .theme-mode-toggle:hover {
@@ -39,13 +39,13 @@
 }
 
 .theme-mode-toggle__icon {
-  display: none;
   align-items: center;
-  justify-content: center;
-  min-width: 0;
+  display: none;
   font-size: 0.72rem;
+  justify-content: center;
   letter-spacing: 0;
   line-height: 1;
+  min-width: 0;
 }
 
 .theme-mode-toggle__icon--auto {
