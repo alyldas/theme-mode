@@ -24,7 +24,7 @@
 Install from GitHub Packages:
 
 ```sh
-npm install @alyldas/theme-mode@0.1.0
+npm install @alyldas/theme-mode@0.1.1
 ```
 
 Configure the GitHub Packages registry for the package scope:
@@ -40,7 +40,7 @@ When using `package.json`, keep the dependency as a normal package version:
 ```json
 {
   "dependencies": {
-    "@alyldas/theme-mode": "0.1.0"
+    "@alyldas/theme-mode": "0.1.1"
   }
 }
 ```
@@ -286,7 +286,7 @@ npm run check
 
 The gate runs formatting, ESLint, typecheck, 100% core/Vue coverage, export smoke tests, and `npm pack --dry-run`.
 
-Tags matching `v*` publish the package to GitHub Packages.
+Tags matching `v*` publish the package to GitHub Packages. After a successful publish, the workflow creates a GitHub Release with generated notes only. Releases do not attach `.tgz` files, and GitHub Packages remains the only package source.
 
 ## Contributing
 

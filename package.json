@@ -1,6 +1,6 @@
 {
   "name": "@alyldas/theme-mode",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nuxt-first color mode controller with Vue and core entry points.",
   "type": "module",
   "license": "MIT",
