@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Theme Mode README Demo</title>
+    <style>
+      :root {
+        --bg: #f4f0e8;
+        --border: #d8d0c3;
+        --card: #fffdf8;
+        --card-muted: #f5efe4;
+        --chip: #ede4d6;
+        --chip-active: #151515;
+        --chip-active-text: #ffffff;
+        --muted: #6d6559;
+        --panel: #ffffff;
+        --shadow: 0 28px 80px rgb(59 51 41 / 0.16);
+        --text: #191713;
+      }
+
+      [data-theme='dark'] {
+        --bg: #17181f;
+        --border: #3c3f4b;
+        --card: #20222b;
+        --card-muted: #292c37;
+        --chip: #313541;
+        --chip-active: #f8fafc;
+        --chip-active-text: #15171c;
+        --muted: #c0c5d1;
+        --panel: #242734;
+        --shadow: 0 28px 80px rgb(0 0 0 / 0.35);
+        --text: #f8fafc;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        align-items: center;
+        background:
+          radial-gradient(
+            circle at 22% 14%,
+            rgb(94 170 255 / 0.18),
+            transparent 24rem
+          ),
+          radial-gradient(
+            circle at 76% 86%,
+            rgb(40 199 111 / 0.16),
+            transparent 26rem
+          ),
+          var(--bg);
+        color: var(--text);
+        display: flex;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+        height: 100vh;
+        justify-content: center;
+        margin: 0;
+      }
+
+      .window {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        height: 620px;
+        overflow: hidden;
+        width: 1120px;
+      }
+
+      .bar {
+        align-items: center;
+        background: var(--card-muted);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 12px;
+        height: 70px;
+        padding: 0 34px;
+      }
+
+      .dot {
+        border-radius: 999px;
+        height: 12px;
+        width: 12px;
+      }
+
+      .dot:nth-child(1) {
+        background: #ef4444;
+      }
+
+      .dot:nth-child(2) {
+        background: #f59e0b;
+      }
+
+      .dot:nth-child(3) {
+        background: #22c55e;
+      }
+
+      .brand {
+        color: var(--muted);
+        font-size: 17px;
+        font-weight: 700;
+        margin-left: 18px;
+      }
+
+      .content {
+        display: grid;
+        gap: 30px;
+        grid-template-columns: 1.03fr 0.97fr;
+        padding: 42px 56px;
+      }
+
+      .eyebrow {
+        color: var(--muted);
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0;
+        margin: 0 0 18px;
+      }
+
+      h1 {
+        font-size: 60px;
+        letter-spacing: 0;
+        line-height: 1;
+        margin: 0 0 22px;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: 23px;
+        line-height: 1.45;
+        margin: 0 0 34px;
+        max-width: 520px;
+      }
+
+      .segmented {
+        background: var(--card-muted);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 8px;
+        width: 460px;
+      }
+
+      .segment {
+        align-items: center;
+        background: var(--chip);
+        border: 1px solid transparent;
+        border-radius: 13px;
+        color: var(--text);
+        display: flex;
+        font-size: 19px;
+        font-weight: 800;
+        height: 58px;
+        justify-content: center;
+      }
+
+      .segment.is-active {
+        background: var(--chip-active);
+        color: var(--chip-active-text);
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 24px;
+      }
+
+      .toggle-preview {
+        align-items: center;
+        display: grid;
+        gap: 22px;
+        grid-template-columns: 92px 1fr;
+        margin-bottom: 20px;
+      }
+
+      .toggle {
+        align-items: center;
+        background: var(--panel);
+        border: 2px solid var(--border);
+        border-radius: 24px;
+        display: flex;
+        font-size: 34px;
+        font-weight: 900;
+        height: 92px;
+        justify-content: center;
+        width: 92px;
+      }
+
+      .toggle-copy h2 {
+        font-size: 28px;
+        line-height: 1.1;
+        margin: 0 0 10px;
+      }
+
+      .toggle-copy p {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.35;
+        margin: 0;
+      }
+
+      .state-grid {
+        display: grid;
+        gap: 9px;
+      }
+
+      .state-row {
+        background: var(--card-muted);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 138px 1fr;
+        padding: 10px 14px;
+      }
+
+      .state-row span {
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .state-row code {
+        color: var(--text);
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="window" data-screenshot-ready>
+      <header class="bar" aria-label="Demo browser chrome">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="brand">@alyldas/theme-mode</span>
+      </header>
+
+      <section class="content" aria-label="Theme mode state">
+        <div>
+          <p class="eyebrow" id="eyebrow">Mode</p>
+          <h1 id="headline">Theme Mode</h1>
+          <p class="lead" id="lead">
+            A consistent README demo for the auto, dark, and light controller
+            states.
+          </p>
+
+          <div class="segmented" aria-label="Theme mode cycle">
+            <div class="segment" data-segment="auto">Auto</div>
+            <div class="segment" data-segment="dark">Dark</div>
+            <div class="segment" data-segment="light">Light</div>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="toggle-preview">
+            <div class="toggle" id="icon" aria-hidden="true">A</div>
+            <div class="toggle-copy">
+              <h2 id="slot-title">Renderless toggle slot</h2>
+              <p id="slot-copy">
+                The slot exposes mode, resolvedTheme, nextMode, and label.
+              </p>
+            </div>
+          </div>
+
+          <div class="state-grid">
+            <div class="state-row">
+              <span>mode</span>
+              <code id="mode">auto</code>
+            </div>
+            <div class="state-row">
+              <span>resolvedTheme</span>
+              <code id="resolved">light</code>
+            </div>
+            <div class="state-row">
+              <span>source</span>
+              <code id="source">prefers-color-scheme: light</code>
+            </div>
+            <div class="state-row">
+              <span>data-theme</span>
+              <code id="attribute-theme">light</code>
+            </div>
+            <div class="state-row">
+              <span>data-theme-mode</span>
+              <code id="attribute-mode">auto</code>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const modes = {
+        auto: {
+          eyebrow: 'Auto mode',
+          headline: 'System-aware theme',
+          icon: 'A',
+          lead: 'Auto keeps the selected mode as auto while resolving the concrete theme from the system preference.',
+          resolved: 'light',
+          source: 'system preference: light',
+          slotCopy:
+            'Auto is visibly distinct: mode stays auto, resolvedTheme follows the OS.',
+          theme: 'light',
+        },
+        dark: {
+          eyebrow: 'Dark mode',
+          headline: 'Explicit dark theme',
+          icon: 'D',
+          lead: 'Dark applies the dark theme directly and does not depend on the current system preference.',
+          resolved: 'dark',
+          source: 'explicit user mode',
+          slotCopy:
+            'Dark stores mode as dark and applies the dark document theme.',
+          theme: 'dark',
+        },
+        light: {
+          eyebrow: 'Light mode',
+          headline: 'Explicit light theme',
+          icon: 'L',
+          lead: 'Light applies the light theme directly and does not depend on the current system preference.',
+          resolved: 'light',
+          source: 'explicit user mode',
+          slotCopy:
+            'Light stores mode as light and applies the light document theme.',
+          theme: 'light',
+        },
+      }
+
+      const params = new URLSearchParams(window.location.search)
+      const mode = modes[params.get('mode')] ? params.get('mode') : 'auto'
+      const state = modes[mode]
+
+      document.documentElement.dataset.theme = state.theme
+      document.documentElement.dataset.themeMode = mode
+      document.documentElement.style.colorScheme = state.theme
+
+      document.getElementById('eyebrow').textContent = state.eyebrow
+      document.getElementById('headline').textContent = state.headline
+      document.getElementById('lead').textContent = state.lead
+      document.getElementById('icon').textContent = state.icon
+      document.getElementById('slot-copy').textContent = state.slotCopy
+      document.getElementById('mode').textContent = mode
+      document.getElementById('resolved').textContent = state.resolved
+      document.getElementById('source').textContent = state.source
+      document.getElementById('attribute-theme').textContent = state.theme
+      document.getElementById('attribute-mode').textContent = mode
+
+      for (const segment of document.querySelectorAll('[data-segment]')) {
+        segment.classList.toggle('is-active', segment.dataset.segment === mode)
+      }
+    </script>
+  </body>
+</html>

@@ -1,6 +1,29 @@
 # Theme Mode
 
+[![Publish](https://github.com/alyldas/theme-mode/actions/workflows/publish.yml/badge.svg)](https://github.com/alyldas/theme-mode/actions/workflows/publish.yml)
+[![Version](https://img.shields.io/github/package-json/v/alyldas/theme-mode?label=version)](https://github.com/alyldas/theme-mode/blob/master/package.json)
+[![License](https://img.shields.io/github/license/alyldas/theme-mode)](https://github.com/alyldas/theme-mode/blob/master/LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-ready-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vue](https://img.shields.io/badge/Vue-3-42b883?logo=vuedotjs&logoColor=white)](https://vuejs.org/)
+[![Nuxt](https://img.shields.io/badge/Nuxt-4-00dc82?logo=nuxt&logoColor=white)](https://nuxt.com/)
+
 `@alyldas/theme-mode` is a small color mode controller for Nuxt, Vue, and framework-neutral helpers.
+
+## Screenshots
+
+Generated from [docs/demo.html](docs/demo.html).
+
+### Auto
+
+![Theme Mode auto preview](docs/screenshots/theme-mode-auto.png)
+
+### Dark
+
+![Theme Mode dark preview](docs/screenshots/theme-mode-dark.png)
+
+### Light
+
+![Theme Mode light preview](docs/screenshots/theme-mode-light.png)
 
 ## What This Package Does
 
