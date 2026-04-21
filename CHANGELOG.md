@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Release README badge fix.
+
 ## 1.0.0
 
 - Promote the documented Nuxt, Vue, and core entry points to a stable v1 API.
