@@ -1,5 +1,6 @@
 .typecheck
 .idea/
+.husky/_
 coverage
 dist
 node_modules

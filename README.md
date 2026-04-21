@@ -47,7 +47,7 @@ Generated from [docs/demo.html](docs/demo.html).
 Install from GitHub Packages:
 
 ```sh
-npm install @alyldas/theme-mode@0.1.2
+npm install @alyldas/theme-mode@1.0.0
 ```
 
 Configure the GitHub Packages registry for the package scope:
@@ -63,7 +63,7 @@ When using `package.json`, keep the dependency as a normal package version:
 ```json
 {
   "dependencies": {
-    "@alyldas/theme-mode": "0.1.2"
+    "@alyldas/theme-mode": "1.0.0"
   }
 }
 ```
@@ -298,6 +298,8 @@ This repository keeps the package source-only. Do not commit generated output:
 - `node_modules`
 
 `dist` is created by `npm run build`, `npm run test:exports`, `npm run pack:dry`, and `npm run prepare`.
+
+README screenshot PNGs are committed documentation assets. Regenerate them from [docs/demo.html](docs/demo.html) when the demo UI changes.
 
 ## Release Checklist
 
