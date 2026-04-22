@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/alyldas/theme-mode/issues"
   },
-  "homepage": "https://github.com/alyldas/theme-mode#readme",
+  "homepage": "https://alyldas.github.io/theme-mode/",
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com"
@@ -67,6 +67,9 @@
     "nuxt",
     "theme-mode",
     "vue"
+  ],
+  "browserslist": [
+    "baseline widely available with downstream"
   ],
   "dependencies": {
     "@nuxt/kit": "^4.4.2"

@@ -13,9 +13,13 @@
 
 Generated from [docs/demo.html](docs/demo.html).
 
-### Auto
+### Auto / light
 
 ![Theme Mode auto preview](docs/screenshots/theme-mode-auto.png)
+
+### Auto / dark
+
+![Theme Mode auto dark preview](docs/screenshots/theme-mode-auto-dark.png)
 
 ### Dark
 
@@ -47,7 +51,7 @@ Generated from [docs/demo.html](docs/demo.html).
 Install from GitHub Packages:
 
 ```sh
-npm install @alyldas/theme-mode@1.0.0
+npm install @alyldas/theme-mode
 ```
 
 Configure the GitHub Packages registry for the package scope:
@@ -58,15 +62,7 @@ Configure the GitHub Packages registry for the package scope:
 
 GitHub Packages can require authentication for package reads. Use a token with `read:packages` in your local npm config or CI secret; do not commit tokens.
 
-When using `package.json`, keep the dependency as a normal package version:
-
-```json
-{
-  "dependencies": {
-    "@alyldas/theme-mode": "1.0.0"
-  }
-}
-```
+When using `package.json`, let npm write the resolved dependency version after install.
 
 Optional preset CSS:
 
