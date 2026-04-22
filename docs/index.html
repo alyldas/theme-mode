@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-theme-mode="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Theme Mode is a Nuxt-first color mode controller with Vue and core entry points."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23191713'/%3E%3Cpath d='M16 20h32v7H36v21h-8V27H16z' fill='%23f7f4ed'/%3E%3C/svg%3E"
+    />
+    <title>Theme Mode - Nuxt, Vue, and Core Color Mode Controller</title>
+    <style>
+      :root {
+        --accent: #0e9488;
+        --accent-strong: #0f766e;
+        --bg: #f7f4ed;
+        --border: #d9d4c8;
+        --code: #181b20;
+        --code-border: #31363f;
+        --code-text: #f8fafc;
+        --danger: #b33443;
+        --muted: #625f59;
+        --panel: #fffefa;
+        --panel-strong: #ffffff;
+        --shadow: 0 24px 70px rgb(25 23 19 / 0.16);
+        --surface: #eee8da;
+        --text: #191713;
+        --theme-mode-auto-icon-display: inline-flex;
+        --theme-mode-dark-icon-display: none;
+        --theme-mode-light-icon-display: none;
+        color-scheme: light;
+      }
+
+      [data-theme='dark'] {
+        --accent: #41c7b7;
+        --accent-strong: #7ddbd0;
+        --bg: #16171a;
+        --border: #3f4249;
+        --code: #0e1014;
+        --code-border: #2f3540;
+        --code-text: #f4f7fb;
+        --danger: #f18590;
+        --muted: #c2c7cd;
+        --panel: #202329;
+        --panel-strong: #262a31;
+        --shadow: 0 24px 70px rgb(0 0 0 / 0.36);
+        --surface: #2d3138;
+        --text: #f8fafc;
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--bg);
+        color: var(--text);
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background:
+          linear-gradient(rgb(247 244 237 / 0.86), rgb(247 244 237 / 0.94)),
+          url('screenshots/theme-mode-auto.png') center top / 1180px auto
+            no-repeat,
+          var(--bg);
+        color: var(--text);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+        margin: 0;
+      }
+
+      [data-theme='dark'] body {
+        background:
+          linear-gradient(rgb(22 23 26 / 0.88), rgb(22 23 26 / 0.95)),
+          url('screenshots/theme-mode-dark.png') center top / 1180px auto
+            no-repeat,
+          var(--bg);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      code {
+        font-family:
+          'SFMono-Regular', Consolas, 'Liberation Mono', ui-monospace, monospace;
+      }
+
+      .site-header {
+        align-items: center;
+        backdrop-filter: blur(18px);
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 18px;
+        inset: 0 0 auto;
+        min-height: 74px;
+        padding: 14px clamp(18px, 4vw, 56px);
+        position: sticky;
+        z-index: 10;
+      }
+
+      .brand {
+        align-items: center;
+        display: inline-flex;
+        font-size: 0.96rem;
+        font-weight: 800;
+        gap: 10px;
+        letter-spacing: 0;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        align-items: center;
+        background: var(--text);
+        border-radius: 8px;
+        color: var(--bg);
+        display: inline-flex;
+        flex: 0 0 auto;
+        font-size: 0.74rem;
+        height: 34px;
+        justify-content: center;
+        width: 34px;
+      }
+
+      .nav {
+        align-items: center;
+        display: flex;
+        gap: 18px;
+        margin-left: auto;
+      }
+
+      .nav-link {
+        color: var(--muted);
+        font-size: 0.92rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .toolbar {
+        align-items: center;
+        display: flex;
+        gap: 8px;
+      }
+
+      .segmented {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: inline-grid;
+        gap: 4px;
+        grid-auto-flow: column;
+        padding: 4px;
+      }
+
+      .segment-button {
+        background: transparent;
+        border: 0;
+        border-radius: 6px;
+        color: var(--muted);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.86rem;
+        font-weight: 800;
+        min-height: 34px;
+        min-width: 44px;
+        padding: 0 10px;
+      }
+
+      .segment-button.is-active {
+        background: var(--panel-strong);
+        box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+        color: var(--text);
+      }
+
+      .theme-mode-toggle {
+        --theme-mode-toggle-size: 2.75rem;
+        --theme-mode-toggle-radius: 8px;
+        --theme-mode-toggle-bg: var(--surface);
+        --theme-mode-toggle-border: var(--border);
+        --theme-mode-toggle-color: var(--text);
+        --theme-mode-toggle-hover-bg: color-mix(
+          in srgb,
+          var(--panel-strong) 72%,
+          var(--accent) 28%
+        );
+        --theme-mode-toggle-focus-ring: 0 0 0 3px
+          color-mix(in srgb, var(--accent) 26%, transparent);
+        align-items: center;
+        appearance: none;
+        background: var(--theme-mode-toggle-bg);
+        border: 1px solid var(--theme-mode-toggle-border);
+        border-radius: var(--theme-mode-toggle-radius);
+        color: var(--theme-mode-toggle-color);
+        cursor: pointer;
+        display: inline-flex;
+        font: inherit;
+        height: var(--theme-mode-toggle-size);
+        justify-content: center;
+        line-height: 1;
+        padding: 0;
+        position: relative;
+        width: var(--theme-mode-toggle-size);
+      }
+
+      .theme-mode-toggle:hover {
+        background: var(--theme-mode-toggle-hover-bg);
+      }
+
+      .theme-mode-toggle:focus-visible {
+        box-shadow: var(--theme-mode-toggle-focus-ring);
+        outline: none;
+      }
+
+      .theme-mode-toggle__icon {
+        align-items: center;
+        display: none;
+        justify-content: center;
+        letter-spacing: 0;
+        line-height: 1;
+        min-width: 0;
+      }
+
+      .theme-mode-toggle__icon--auto {
+        display: var(--theme-mode-auto-icon-display, inline-flex);
+      }
+
+      .theme-mode-toggle__icon--dark {
+        display: var(--theme-mode-dark-icon-display, none);
+      }
+
+      .theme-mode-toggle__icon--light {
+        display: var(--theme-mode-light-icon-display, none);
+      }
+
+      .theme-mode-toggle__icon svg {
+        height: 20px;
+        stroke-width: 2.15;
+        width: 20px;
+      }
+
+      .theme-mode-toggle__icon--auto {
+        gap: 2px;
+      }
+
+      .theme-mode-toggle__icon--auto svg {
+        height: 17px;
+        width: 17px;
+      }
+
+      .hero {
+        display: grid;
+        min-height: calc(100svh - 74px);
+        overflow: hidden;
+        padding: clamp(58px, 8vw, 106px) clamp(18px, 5vw, 72px) 34px;
+        position: relative;
+      }
+
+      .hero-inner {
+        align-self: center;
+        display: grid;
+        gap: clamp(30px, 5vw, 58px);
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 520px);
+        margin: 0 auto;
+        max-width: 1180px;
+        width: 100%;
+      }
+
+      .hero-copy {
+        max-width: 710px;
+      }
+
+      .eyebrow {
+        color: var(--accent-strong);
+        font-size: clamp(0.86rem, 1.5vw, 0.98rem);
+        font-weight: 900;
+        letter-spacing: 0;
+        margin: 0 0 18px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 8vw, 6.8rem);
+        letter-spacing: 0;
+        line-height: 0.95;
+        margin: 0;
+        max-width: 790px;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: clamp(1.08rem, 2vw, 1.45rem);
+        line-height: 1.5;
+        margin: 28px 0 0;
+        max-width: 650px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 34px;
+      }
+
+      .button {
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: inline-flex;
+        font-size: 0.96rem;
+        font-weight: 850;
+        gap: 10px;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        text-decoration: none;
+      }
+
+      .button-primary {
+        background: var(--text);
+        border-color: var(--text);
+        color: var(--bg);
+      }
+
+      .button-secondary {
+        background: var(--panel);
+        color: var(--text);
+      }
+
+      .button svg {
+        height: 18px;
+        width: 18px;
+      }
+
+      .hero-panel {
+        align-self: stretch;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        min-height: 520px;
+        overflow: hidden;
+      }
+
+      .browser-bar {
+        align-items: center;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 8px;
+        height: 48px;
+        padding: 0 18px;
+      }
+
+      .dot {
+        border-radius: 999px;
+        display: block;
+        height: 10px;
+        width: 10px;
+      }
+
+      .dot:nth-child(1) {
+        background: #ef4444;
+      }
+
+      .dot:nth-child(2) {
+        background: #f59e0b;
+      }
+
+      .dot:nth-child(3) {
+        background: #22c55e;
+      }
+
+      .preview-shell {
+        display: grid;
+        gap: 20px;
+        padding: 24px;
+      }
+
+      .preview-image {
+        aspect-ratio: 16 / 10;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+      }
+
+      .mode-panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: grid;
+        gap: 14px;
+        padding: 18px;
+      }
+
+      .mode-row {
+        align-items: center;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 1fr auto;
+      }
+
+      .mode-title {
+        font-size: 1rem;
+        font-weight: 850;
+        margin: 0;
+      }
+
+      .mode-description {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.45;
+        margin: 4px 0 0;
+      }
+
+      .mode-buttons {
+        display: grid;
+        gap: 6px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .mode-button {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 850;
+        min-height: 42px;
+        padding: 0 8px;
+      }
+
+      .mode-button.is-active {
+        background: var(--text);
+        border-color: var(--text);
+        color: var(--bg);
+      }
+
+      .hero-footer {
+        align-self: end;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 28px auto 0;
+        max-width: 1180px;
+        width: 100%;
+      }
+
+      .section {
+        border-top: 1px solid var(--border);
+        padding: clamp(58px, 8vw, 92px) clamp(18px, 5vw, 72px);
+      }
+
+      .section-inner {
+        margin: 0 auto;
+        max-width: 1180px;
+      }
+
+      .section-heading {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 30px;
+        max-width: 760px;
+      }
+
+      h2 {
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        letter-spacing: 0;
+        line-height: 1;
+        margin: 0;
+      }
+
+      .section-text {
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.55;
+        margin: 0;
+      }
+
+      .feature-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .feature-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: grid;
+        gap: 14px;
+        min-height: 210px;
+        padding: 22px;
+      }
+
+      .feature-icon {
+        align-items: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--accent-strong);
+        display: inline-flex;
+        height: 42px;
+        justify-content: center;
+        width: 42px;
+      }
+
+      .feature-icon svg {
+        height: 20px;
+        width: 20px;
+      }
+
+      .feature-card h3,
+      .entry h3 {
+        font-size: 1.12rem;
+        line-height: 1.2;
+        margin: 0;
+      }
+
+      .feature-card p,
+      .entry p {
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .code-grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      }
+
+      .code-block {
+        background: var(--code);
+        border: 1px solid var(--code-border);
+        border-radius: 8px;
+        color: var(--code-text);
+        display: grid;
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .code-title {
+        align-items: center;
+        border-bottom: 1px solid var(--code-border);
+        color: #cbd5e1;
+        display: flex;
+        font-size: 0.82rem;
+        font-weight: 800;
+        justify-content: space-between;
+        min-height: 44px;
+        padding: 0 16px;
+      }
+
+      pre {
+        margin: 0;
+        overflow-x: auto;
+        padding: 18px;
+      }
+
+      pre code {
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+
+      .entry-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .entry {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: grid;
+        gap: 8px;
+        padding: 18px;
+      }
+
+      .entry code {
+        color: var(--accent-strong);
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+
+      .demo-strip {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .shot {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .shot img {
+        aspect-ratio: 16 / 10;
+        display: block;
+        height: auto;
+        object-fit: cover;
+        width: 100%;
+      }
+
+      .shot figcaption {
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 800;
+        padding: 12px 14px;
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: space-between;
+        padding: 26px clamp(18px, 5vw, 72px);
+      }
+
+      .site-footer a {
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .sr-only {
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+      }
+
+      @media (max-width: 980px) {
+        .nav {
+          display: none;
+        }
+
+        .hero-inner,
+        .code-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-panel {
+          min-height: auto;
+        }
+
+        .feature-grid,
+        .demo-strip {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .site-header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .toolbar {
+          width: 100%;
+        }
+
+        .segmented {
+          flex: 1 1 auto;
+        }
+
+        .segment-button {
+          min-width: 0;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        .mode-row {
+          grid-template-columns: 1fr;
+        }
+
+        .mode-buttons {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Theme Mode home">
+        <span class="brand-mark" aria-hidden="true">TM</span>
+        <span>@alyldas/theme-mode</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="#features" data-i18n="navFeatures"
+          >Features</a
+        >
+        <a class="nav-link" href="#install" data-i18n="navInstall">Install</a>
+        <a class="nav-link" href="#demo" data-i18n="navDemo">Demo</a>
+      </nav>
+
+      <div class="toolbar">
+        <div class="segmented" aria-label="Language">
+          <button
+            class="segment-button is-active"
+            type="button"
+            data-lang-button="en"
+          >
+            EN
+          </button>
+          <button class="segment-button" type="button" data-lang-button="ru">
+            RU
+          </button>
+        </div>
+
+        <button
+          class="theme-mode-toggle"
+          type="button"
+          data-theme-toggle
+          aria-label="Toggle page theme"
+          title="Toggle page theme"
+        >
+          <span class="sr-only" data-i18n="themeToggleLabel"
+            >Toggle page theme</span
+          >
+          <span
+            class="theme-mode-toggle__icon theme-mode-toggle__icon--auto"
+            aria-hidden="true"
+          >
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </span>
+          <span
+            class="theme-mode-toggle__icon theme-mode-toggle__icon--dark"
+            aria-hidden="true"
+          >
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+          </span>
+          <span
+            class="theme-mode-toggle__icon theme-mode-toggle__icon--light"
+            aria-hidden="true"
+          >
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="eyebrow">Nuxt-first color mode</p>
+            <h1 id="hero-title" data-i18n="heroTitle">
+              Theme control without the flash.
+            </h1>
+            <p class="lead" data-i18n="heroLead">
+              A small controller for auto, dark, and light mode with Nuxt
+              anti-flash setup, a renderless Vue toggle, and framework-neutral
+              helpers.
+            </p>
+
+            <div class="actions">
+              <a class="button button-primary" href="#install">
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 5v14m7-7H5"
+                  />
+                </svg>
+                <span data-i18n="primaryAction">Install package</span>
+              </a>
+              <a class="button button-secondary" href="demo.html">
+                <svg
+                  aria-hidden="true"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                  />
+                </svg>
+                <span data-i18n="demoAction">Open demo</span>
+              </a>
+            </div>
+          </div>
+
+          <aside class="hero-panel" aria-label="Theme mode preview">
+            <div class="browser-bar" aria-hidden="true">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+
+            <div class="preview-shell">
+              <img
+                class="preview-image"
+                data-preview-image
+                src="screenshots/theme-mode-auto.png"
+                alt="Theme Mode auto preview"
+              />
+
+              <div class="mode-panel">
+                <div class="mode-row">
+                  <div>
+                    <h2 class="mode-title" data-i18n="previewTitle">
+                      Live document state
+                    </h2>
+                    <p class="mode-description" data-i18n="previewText">
+                      Switch the preview between auto, dark, and light to see
+                      the same states the package writes to the document.
+                    </p>
+                  </div>
+                  <code data-mode-output>auto / light</code>
+                </div>
+
+                <div class="mode-buttons" aria-label="Theme mode preview">
+                  <button
+                    class="mode-button is-active"
+                    type="button"
+                    data-mode-button="auto"
+                    data-i18n="modeAuto"
+                  >
+                    Auto
+                  </button>
+                  <button
+                    class="mode-button"
+                    type="button"
+                    data-mode-button="dark"
+                    data-i18n="modeDark"
+                  >
+                    Dark
+                  </button>
+                  <button
+                    class="mode-button"
+                    type="button"
+                    data-mode-button="light"
+                    data-i18n="modeLight"
+                  >
+                    Light
+                  </button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <p class="hero-footer" data-i18n="heroFootnote">
+          Explicit entry points for Nuxt, Vue, and core helpers. No root export
+          in v1.
+        </p>
+      </section>
+
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2 id="features-title" data-i18n="featuresTitle">
+              Built for app shells that must render correctly first.
+            </h2>
+            <p class="section-text" data-i18n="featuresLead">
+              Theme Mode keeps the selected mode and the concrete resolved theme
+              separate, so auto mode remains transparent across SSR and
+              hydration.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <span class="feature-icon" aria-hidden="true">
+                <svg
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4 5h16M4 12h16M4 19h10"
+                  />
+                </svg>
+              </span>
+              <h3 data-i18n="featureNuxtTitle">Nuxt anti-flash script</h3>
+              <p data-i18n="featureNuxtText">
+                The module injects an early head script and hydrates the client
+                controller with the same normalized options.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <span class="feature-icon" aria-hidden="true">
+                <svg
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8 7h8m-9 5h10m-7 5h4M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"
+                  />
+                </svg>
+              </span>
+              <h3 data-i18n="featureVueTitle">Renderless Vue toggle</h3>
+              <p data-i18n="featureVueText">
+                The slot exposes mode, resolvedTheme, nextMode, label, and
+                actions while your app owns markup and accessibility.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <span class="feature-icon" aria-hidden="true">
+                <svg
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7 8 3 12l4 4m10-8 4 4-4 4M14 4l-4 16"
+                  />
+                </svg>
+              </span>
+              <h3 data-i18n="featureCoreTitle">Core helpers</h3>
+              <p data-i18n="featureCoreText">
+                Use framework-neutral parsing, persistence, cycle, and DOM
+                application helpers in tests or custom adapters.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="install" aria-labelledby="install-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2 id="install-title" data-i18n="installTitle">
+              Install from GitHub Packages.
+            </h2>
+            <p class="section-text" data-i18n="installLead">
+              Configure the scope registry, install the package, then import the
+              entry point that matches your app layer.
+            </p>
+          </div>
+
+          <div class="code-grid">
+            <div class="code-block">
+              <div class="code-title">
+                <span data-i18n="installCodeTitle">package setup</span>
+                <span>@alyldas/theme-mode</span>
+              </div>
+              <pre><code>@alyldas:registry=https://npm.pkg.github.com
+npm install @alyldas/theme-mode@1.0.1
+
+import '@alyldas/theme-mode/style.css'</code></pre>
+            </div>
+
+            <div class="entry-list" aria-label="Entry points">
+              <article class="entry">
+                <code>@alyldas/theme-mode/nuxt</code>
+                <h3 data-i18n="entryNuxtTitle">Nuxt module</h3>
+                <p data-i18n="entryNuxtText">
+                  Register the module and configure storage, attributes, CSS
+                  variable prefix, fallback theme, or custom cycle.
+                </p>
+              </article>
+
+              <article class="entry">
+                <code>@alyldas/theme-mode/vue</code>
+                <h3 data-i18n="entryVueTitle">Vue composable and toggle</h3>
+                <p data-i18n="entryVueText">
+                  Use the shared document controller or create isolated
+                  controllers for tests and embedded widgets.
+                </p>
+              </article>
+
+              <article class="entry">
+                <code>@alyldas/theme-mode/core</code>
+                <h3 data-i18n="entryCoreTitle">Framework-neutral helpers</h3>
+                <p data-i18n="entryCoreText">
+                  Normalize options, resolve preferred theme, persist mode, and
+                  apply document attributes.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="ssr-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2 id="ssr-title" data-i18n="ssrTitle">
+              SSR state stays aligned with hydration.
+            </h2>
+            <p class="section-text" data-i18n="ssrLead">
+              The Nuxt module writes `data-theme`, `data-theme-mode`,
+              `color-scheme`, and icon display CSS variables before the Vue app
+              takes over.
+            </p>
+          </div>
+
+          <div class="code-block">
+            <div class="code-title">
+              <span>nuxt.config.ts</span>
+              <span data-i18n="ssrCodeLabel">minimal setup</span>
+            </div>
+            <pre><code>export default defineNuxtConfig({
+  modules: ['@alyldas/theme-mode/nuxt'],
+  themeMode: {
+    defaultMode: 'auto',
+    fallbackTheme: 'dark',
+    storageKey: 'theme-mode',
+  },
+})</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="demo" aria-labelledby="demo-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2 id="demo-title" data-i18n="demoTitle">
+              Three states, one contract.
+            </h2>
+            <p class="section-text" data-i18n="demoLead">
+              The README screenshots are generated from the same static demo
+              page linked here.
+            </p>
+          </div>
+
+          <div class="demo-strip">
+            <figure class="shot">
+              <img
+                src="screenshots/theme-mode-auto.png"
+                alt="Auto mode preview"
+              />
+              <figcaption data-i18n="shotAuto">Auto mode</figcaption>
+            </figure>
+            <figure class="shot">
+              <img
+                src="screenshots/theme-mode-dark.png"
+                alt="Dark mode preview"
+              />
+              <figcaption data-i18n="shotDark">Dark mode</figcaption>
+            </figure>
+            <figure class="shot">
+              <img
+                src="screenshots/theme-mode-light.png"
+                alt="Light mode preview"
+              />
+              <figcaption data-i18n="shotLight">Light mode</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-i18n="footerText">
+        MIT licensed package by alyldas for Nuxt and Vue apps.
+      </span>
+      <span>
+        <a href="demo.html" data-i18n="footerDemo">Demo</a>
+        /
+        <a href="https://github.com/alyldas/theme-mode">GitHub</a>
+      </span>
+    </footer>
+
+    <script>
+      const translations = {
+        en: {
+          demoAction: 'Open demo',
+          demoLead:
+            'The README screenshots are generated from the same static demo page linked here.',
+          demoTitle: 'Three states, one contract.',
+          entryCoreText:
+            'Normalize options, resolve preferred theme, persist mode, and apply document attributes.',
+          entryCoreTitle: 'Framework-neutral helpers',
+          entryNuxtText:
+            'Register the module and configure storage, attributes, CSS variable prefix, fallback theme, or custom cycle.',
+          entryNuxtTitle: 'Nuxt module',
+          entryVueText:
+            'Use the shared document controller or create isolated controllers for tests and embedded widgets.',
+          entryVueTitle: 'Vue composable and toggle',
+          eyebrow: 'Nuxt-first color mode',
+          featureCoreText:
+            'Use framework-neutral parsing, persistence, cycle, and DOM application helpers in tests or custom adapters.',
+          featureCoreTitle: 'Core helpers',
+          featureNuxtText:
+            'The module injects an early head script and hydrates the client controller with the same normalized options.',
+          featureNuxtTitle: 'Nuxt anti-flash script',
+          featureVueText:
+            'The slot exposes mode, resolvedTheme, nextMode, label, and actions while your app owns markup and accessibility.',
+          featureVueTitle: 'Renderless Vue toggle',
+          featuresLead:
+            'Theme Mode keeps the selected mode and the concrete resolved theme separate, so auto mode remains transparent across SSR and hydration.',
+          featuresTitle:
+            'Built for app shells that must render correctly first.',
+          footerDemo: 'Demo',
+          footerText: 'MIT licensed package by alyldas for Nuxt and Vue apps.',
+          heroFootnote:
+            'Explicit entry points for Nuxt, Vue, and core helpers. No root export in v1.',
+          heroLead:
+            'A small controller for auto, dark, and light mode with Nuxt anti-flash setup, a renderless Vue toggle, and framework-neutral helpers.',
+          heroTitle: 'Theme control without the flash.',
+          installCodeTitle: 'package setup',
+          installLead:
+            'Configure the scope registry, install the package, then import the entry point that matches your app layer.',
+          installTitle: 'Install from GitHub Packages.',
+          modeAuto: 'Auto',
+          modeDark: 'Dark',
+          modeLight: 'Light',
+          navDemo: 'Demo',
+          navFeatures: 'Features',
+          navInstall: 'Install',
+          previewText:
+            'Switch the preview between auto, dark, and light to see the same states the package writes to the document.',
+          previewTitle: 'Live document state',
+          primaryAction: 'Install package',
+          shotAuto: 'Auto mode',
+          shotDark: 'Dark mode',
+          shotLight: 'Light mode',
+          ssrCodeLabel: 'minimal setup',
+          ssrLead:
+            'The Nuxt module writes `data-theme`, `data-theme-mode`, `color-scheme`, and icon display CSS variables before the Vue app takes over.',
+          ssrTitle: 'SSR state stays aligned with hydration.',
+          themeToggleLabel: 'Toggle page theme',
+        },
+        ru: {
+          demoAction: 'Открыть demo',
+          demoLead:
+            'Скриншоты README генерируются из той же статической demo-страницы.',
+          demoTitle: 'Три состояния, один контракт.',
+          entryCoreText:
+            'Нормализуйте опции, определяйте preferred theme, сохраняйте mode и применяйте document attributes.',
+          entryCoreTitle: 'Framework-neutral helpers',
+          entryNuxtText:
+            'Подключайте модуль и настраивайте storage, attributes, CSS variable prefix, fallback theme или custom cycle.',
+          entryNuxtTitle: 'Nuxt module',
+          entryVueText:
+            'Используйте общий document controller или создавайте изолированные controllers для тестов и embedded widgets.',
+          entryVueTitle: 'Vue composable и toggle',
+          eyebrow: 'Color mode для Nuxt',
+          featureCoreText:
+            'Framework-neutral parsing, persistence, cycle и DOM application helpers для тестов или custom adapters.',
+          featureCoreTitle: 'Core helpers',
+          featureNuxtText:
+            'Модуль добавляет ранний head script и гидрирует client controller с теми же normalized options.',
+          featureNuxtTitle: 'Nuxt anti-flash script',
+          featureVueText:
+            'Slot отдает mode, resolvedTheme, nextMode, label и actions, а приложение владеет markup и accessibility.',
+          featureVueTitle: 'Renderless Vue toggle',
+          featuresLead:
+            'Theme Mode разделяет выбранный mode и concrete resolved theme, поэтому auto mode остается прозрачным для SSR и hydration.',
+          featuresTitle:
+            'Для app shell, который должен отрисоваться правильно с первого кадра.',
+          footerDemo: 'Demo',
+          footerText: 'MIT package by alyldas для Nuxt и Vue приложений.',
+          heroFootnote:
+            'Явные entry points для Nuxt, Vue и core helpers. Root export в v1 отсутствует.',
+          heroLead:
+            'Небольшой controller для auto, dark и light mode: Nuxt anti-flash setup, renderless Vue toggle и framework-neutral helpers.',
+          heroTitle: 'Theme control без flash.',
+          installCodeTitle: 'package setup',
+          installLead:
+            'Настройте scope registry, установите пакет и импортируйте entry point под нужный слой приложения.',
+          installTitle: 'Установка из GitHub Packages.',
+          modeAuto: 'Auto',
+          modeDark: 'Dark',
+          modeLight: 'Light',
+          navDemo: 'Demo',
+          navFeatures: 'Features',
+          navInstall: 'Install',
+          previewText:
+            'Переключайте preview между auto, dark и light, чтобы увидеть document state, который пишет пакет.',
+          previewTitle: 'Live document state',
+          primaryAction: 'Установить package',
+          shotAuto: 'Auto mode',
+          shotDark: 'Dark mode',
+          shotLight: 'Light mode',
+          ssrCodeLabel: 'minimal setup',
+          ssrLead:
+            'Nuxt module пишет `data-theme`, `data-theme-mode`, `color-scheme` и icon display CSS variables до запуска Vue app.',
+          ssrTitle: 'SSR state синхронизирован с hydration.',
+          themeToggleLabel: 'Переключить тему страницы',
+        },
+      }
+
+      const previewImages = {
+        auto: {
+          alt: 'Theme Mode auto preview',
+          output: 'auto / light',
+          src: 'screenshots/theme-mode-auto.png',
+          theme: 'light',
+        },
+        dark: {
+          alt: 'Theme Mode dark preview',
+          output: 'dark / dark',
+          src: 'screenshots/theme-mode-dark.png',
+          theme: 'dark',
+        },
+        light: {
+          alt: 'Theme Mode light preview',
+          output: 'light / light',
+          src: 'screenshots/theme-mode-light.png',
+          theme: 'light',
+        },
+      }
+      const modeCycle = ['auto', 'dark', 'light']
+
+      const applyLanguage = (language) => {
+        const dictionary = translations[language] || translations.en
+        const themeToggle = document.querySelector('[data-theme-toggle]')
+
+        document.documentElement.lang = language
+
+        for (const element of document.querySelectorAll('[data-i18n]')) {
+          const value = dictionary[element.dataset.i18n]
+
+          if (value) {
+            element.textContent = value
+          }
+        }
+
+        for (const button of document.querySelectorAll('[data-lang-button]')) {
+          button.classList.toggle(
+            'is-active',
+            button.dataset.langButton === language,
+          )
+        }
+
+        if (themeToggle) {
+          themeToggle.setAttribute('aria-label', dictionary.themeToggleLabel)
+          themeToggle.setAttribute('title', dictionary.themeToggleLabel)
+        }
+      }
+
+      const applyMode = (mode) => {
+        const state = previewImages[mode] || previewImages.auto
+        const image = document.querySelector('[data-preview-image]')
+        const root = document.documentElement
+
+        root.dataset.theme = state.theme
+        root.dataset.themeMode = mode
+        root.style.colorScheme = state.theme
+        root.style.setProperty(
+          '--theme-mode-auto-icon-display',
+          mode === 'auto' ? 'inline-flex' : 'none',
+        )
+        root.style.setProperty(
+          '--theme-mode-dark-icon-display',
+          mode === 'dark' ? 'inline-flex' : 'none',
+        )
+        root.style.setProperty(
+          '--theme-mode-light-icon-display',
+          mode === 'light' ? 'inline-flex' : 'none',
+        )
+
+        if (image) {
+          image.src = state.src
+          image.alt = state.alt
+        }
+
+        document.querySelector('[data-mode-output]').textContent = state.output
+
+        for (const button of document.querySelectorAll('[data-mode-button]')) {
+          button.classList.toggle(
+            'is-active',
+            button.dataset.modeButton === mode,
+          )
+        }
+      }
+
+      for (const button of document.querySelectorAll('[data-lang-button]')) {
+        button.addEventListener('click', () => {
+          applyLanguage(button.dataset.langButton)
+        })
+      }
+
+      for (const button of document.querySelectorAll('[data-mode-button]')) {
+        button.addEventListener('click', () => {
+          applyMode(button.dataset.modeButton)
+        })
+      }
+
+      document
+        .querySelector('[data-theme-toggle]')
+        .addEventListener('click', () => {
+          const currentMode = document.documentElement.dataset.themeMode
+          const currentIndex = modeCycle.indexOf(currentMode)
+          const nextMode = modeCycle[(currentIndex + 1) % modeCycle.length]
+
+          applyMode(nextMode)
+        })
+
+      applyLanguage('en')
+      applyMode('auto')
+    </script>
+  </body>
+</html>

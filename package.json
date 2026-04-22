@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/alyldas/theme-mode/issues"
   },
-  "homepage": "https://github.com/alyldas/theme-mode#readme",
+  "homepage": "https://alyldas.github.io/theme-mode/",
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com"
