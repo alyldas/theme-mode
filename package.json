@@ -68,6 +68,9 @@
     "theme-mode",
     "vue"
   ],
+  "browserslist": [
+    "baseline widely available with downstream"
+  ],
   "dependencies": {
     "@nuxt/kit": "^4.4.2"
   },

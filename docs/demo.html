@@ -3,7 +3,34 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23191713'/%3E%3Cpath d='M16 20h32v7H36v21h-8V27H16z' fill='%23f7f4ed'/%3E%3C/svg%3E"
+    />
     <title>Theme Mode README Demo</title>
+    <script>
+      ;(() => {
+        const modes = ['auto', 'dark', 'light']
+        const params = new URLSearchParams(window.location.search)
+        const mode = modes.includes(params.get('mode'))
+          ? params.get('mode')
+          : 'auto'
+        let prefersDark = false
+
+        try {
+          const preference = window.matchMedia?.('(prefers-color-scheme: dark)')
+
+          prefersDark = Boolean(preference?.matches)
+        } catch {}
+
+        const theme =
+          mode === 'dark' || (mode === 'auto' && prefersDark) ? 'dark' : 'light'
+
+        document.documentElement.dataset.theme = theme
+        document.documentElement.dataset.themeMode = mode
+        document.documentElement.style.colorScheme = theme
+      })()
+    </script>
     <style>
       :root {
         --bg: #f4f0e8;
@@ -64,6 +91,7 @@
         height: 100vh;
         justify-content: center;
         margin: 0;
+        min-width: 0;
       }
 
       .window {
@@ -154,15 +182,29 @@
 
       .segment {
         align-items: center;
+        appearance: none;
         background: var(--chip);
         border: 1px solid transparent;
         border-radius: 13px;
         color: var(--text);
+        cursor: pointer;
         display: flex;
+        font: inherit;
         font-size: 19px;
         font-weight: 800;
         height: 58px;
         justify-content: center;
+        padding: 0;
+        user-select: none;
+      }
+
+      .segment:hover {
+        border-color: var(--border);
+      }
+
+      .segment:focus-visible {
+        box-shadow: 0 0 0 3px rgb(94 170 255 / 0.34);
+        outline: none;
       }
 
       .segment.is-active {
@@ -237,6 +279,155 @@
         font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
         font-size: 15px;
       }
+
+      @media (max-width: 1160px) {
+        body {
+          align-items: flex-start;
+          height: auto;
+          min-height: 100vh;
+          padding: 20px;
+        }
+
+        .window {
+          height: auto;
+          max-width: 1120px;
+          min-height: calc(100vh - 40px);
+          width: 100%;
+        }
+
+        .content {
+          grid-template-columns: 1fr;
+        }
+
+        .lead {
+          max-width: none;
+        }
+
+        .segmented {
+          max-width: 460px;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 12px;
+        }
+
+        .window {
+          border-radius: 20px;
+          min-height: calc(100vh - 24px);
+        }
+
+        .bar {
+          gap: 9px;
+          height: 56px;
+          padding: 0 18px;
+        }
+
+        .dot {
+          height: 10px;
+          width: 10px;
+        }
+
+        .brand {
+          font-size: 14px;
+          margin-left: 8px;
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .content {
+          gap: 24px;
+          padding: 30px 22px;
+        }
+
+        .eyebrow {
+          font-size: 15px;
+          margin-bottom: 12px;
+        }
+
+        h1 {
+          font-size: clamp(42px, 14vw, 58px);
+          margin-bottom: 18px;
+        }
+
+        .lead {
+          font-size: 18px;
+          margin-bottom: 24px;
+        }
+
+        .segmented {
+          gap: 6px;
+          padding: 6px;
+        }
+
+        .segment {
+          border-radius: 11px;
+          font-size: 16px;
+          height: 48px;
+        }
+
+        .card {
+          border-radius: 18px;
+          padding: 18px;
+        }
+
+        .toggle-preview {
+          gap: 14px;
+          grid-template-columns: 68px 1fr;
+        }
+
+        .toggle {
+          border-radius: 18px;
+          font-size: 25px;
+          height: 68px;
+          width: 68px;
+        }
+
+        .toggle-copy h2 {
+          font-size: 22px;
+        }
+
+        .toggle-copy p {
+          font-size: 16px;
+        }
+
+        .state-row {
+          gap: 6px;
+          grid-template-columns: 1fr;
+          padding: 10px 12px;
+        }
+
+        .state-row span {
+          font-size: 14px;
+        }
+
+        .state-row code {
+          font-size: 14px;
+          overflow-wrap: anywhere;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .content {
+          padding: 26px 16px;
+        }
+
+        .segmented {
+          grid-template-columns: 1fr;
+        }
+
+        .segment {
+          height: 44px;
+        }
+
+        .toggle-preview {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body>
@@ -258,9 +449,30 @@
           </p>
 
           <div class="segmented" aria-label="Theme mode cycle">
-            <div class="segment" data-segment="auto">Auto</div>
-            <div class="segment" data-segment="dark">Dark</div>
-            <div class="segment" data-segment="light">Light</div>
+            <button
+              class="segment is-active"
+              type="button"
+              data-segment="auto"
+              aria-pressed="true"
+            >
+              Auto
+            </button>
+            <button
+              class="segment"
+              type="button"
+              data-segment="dark"
+              aria-pressed="false"
+            >
+              Dark
+            </button>
+            <button
+              class="segment"
+              type="button"
+              data-segment="light"
+              aria-pressed="false"
+            >
+              Light
+            </button>
           </div>
         </div>
 
@@ -286,7 +498,7 @@
             </div>
             <div class="state-row">
               <span>source</span>
-              <code id="source">prefers-color-scheme: light</code>
+              <code id="source">prefers-color-scheme</code>
             </div>
             <div class="state-row">
               <span>data-theme</span>
@@ -308,19 +520,14 @@
           headline: 'System-aware theme',
           icon: 'A',
           lead: 'Auto keeps the selected mode as auto while resolving the concrete theme from the system preference.',
-          resolved: 'light',
-          source: 'system preference: light',
           slotCopy:
             'Auto is visibly distinct: mode stays auto, resolvedTheme follows the OS.',
-          theme: 'light',
         },
         dark: {
           eyebrow: 'Dark mode',
           headline: 'Explicit dark theme',
           icon: 'D',
           lead: 'Dark applies the dark theme directly and does not depend on the current system preference.',
-          resolved: 'dark',
-          source: 'explicit user mode',
           slotCopy:
             'Dark stores mode as dark and applies the dark document theme.',
           theme: 'dark',
@@ -330,36 +537,91 @@
           headline: 'Explicit light theme',
           icon: 'L',
           lead: 'Light applies the light theme directly and does not depend on the current system preference.',
-          resolved: 'light',
-          source: 'explicit user mode',
           slotCopy:
             'Light stores mode as light and applies the light document theme.',
           theme: 'light',
         },
       }
 
+      const getPreferredTheme = () => {
+        try {
+          const preference = window.matchMedia?.('(prefers-color-scheme: dark)')
+
+          return preference?.matches ? 'dark' : 'light'
+        } catch {
+          return 'light'
+        }
+      }
+
+      const resolveTheme = (mode) =>
+        mode === 'auto' ? getPreferredTheme() : modes[mode]?.theme || 'light'
+
       const params = new URLSearchParams(window.location.search)
-      const mode = modes[params.get('mode')] ? params.get('mode') : 'auto'
-      const state = modes[mode]
+      const initialMode = modes[params.get('mode')]
+        ? params.get('mode')
+        : 'auto'
 
-      document.documentElement.dataset.theme = state.theme
-      document.documentElement.dataset.themeMode = mode
-      document.documentElement.style.colorScheme = state.theme
+      const applyMode = (mode, shouldUpdateUrl = true) => {
+        const state = modes[mode] || modes.auto
+        const resolvedTheme = resolveTheme(mode)
+        const source =
+          mode === 'auto'
+            ? `prefers-color-scheme: ${resolvedTheme}`
+            : 'explicit user mode'
 
-      document.getElementById('eyebrow').textContent = state.eyebrow
-      document.getElementById('headline').textContent = state.headline
-      document.getElementById('lead').textContent = state.lead
-      document.getElementById('icon').textContent = state.icon
-      document.getElementById('slot-copy').textContent = state.slotCopy
-      document.getElementById('mode').textContent = mode
-      document.getElementById('resolved').textContent = state.resolved
-      document.getElementById('source').textContent = state.source
-      document.getElementById('attribute-theme').textContent = state.theme
-      document.getElementById('attribute-mode').textContent = mode
+        document.documentElement.dataset.theme = resolvedTheme
+        document.documentElement.dataset.themeMode = mode
+        document.documentElement.style.colorScheme = resolvedTheme
+
+        document.getElementById('eyebrow').textContent = state.eyebrow
+        document.getElementById('headline').textContent = state.headline
+        document.getElementById('lead').textContent = state.lead
+        document.getElementById('icon').textContent = state.icon
+        document.getElementById('slot-copy').textContent = state.slotCopy
+        document.getElementById('mode').textContent = mode
+        document.getElementById('resolved').textContent = resolvedTheme
+        document.getElementById('source').textContent = source
+        document.getElementById('attribute-theme').textContent = resolvedTheme
+        document.getElementById('attribute-mode').textContent = mode
+
+        for (const segment of document.querySelectorAll('[data-segment]')) {
+          segment.classList.toggle(
+            'is-active',
+            segment.dataset.segment === mode,
+          )
+          segment.setAttribute(
+            'aria-pressed',
+            String(segment.dataset.segment === mode),
+          )
+        }
+
+        if (shouldUpdateUrl) {
+          const nextUrl = new URL(window.location.href)
+          nextUrl.searchParams.set('mode', mode)
+          window.history.replaceState({}, '', nextUrl)
+        }
+      }
+
+      try {
+        const preferredThemeQuery = window.matchMedia(
+          '(prefers-color-scheme: dark)',
+        )
+        const refreshAutoTheme = () => {
+          if (document.documentElement.dataset.themeMode === 'auto') {
+            applyMode('auto', false)
+          }
+        }
+
+        preferredThemeQuery.addEventListener('change', refreshAutoTheme)
+      } catch {}
 
       for (const segment of document.querySelectorAll('[data-segment]')) {
-        segment.classList.toggle('is-active', segment.dataset.segment === mode)
+        segment.addEventListener('click', () => {
+          applyMode(segment.dataset.segment)
+        })
       }
+
+      applyMode(initialMode, false)
     </script>
   </body>
 </html>
