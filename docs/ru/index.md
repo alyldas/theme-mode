@@ -2,11 +2,11 @@
 layout: home
 title: Theme Mode
 titleTemplate: контроллер темы для Nuxt и Vue
-description: Theme Mode делает авто-, тёмную и светлую тему предсказуемыми в Nuxt SSR, Vue-гидрации и TypeScript-утилитах.
+description: Theme Mode держит режим темы в Nuxt, переключатель Vue и независимые TypeScript-утилиты согласованными между SSR, гидрацией и клиентом.
 hero:
   name: Theme Mode
-  text: Тема без сюрпризов
-  tagline: Небольшой пакет для Nuxt, Vue и независимого TypeScript-кода, где выбранный режим и вычисленная тема хранятся отдельно.
+  text: SSR-безопасное состояние темы для Nuxt и Vue
+  tagline: Модуль для Nuxt, примитивы переключателя для Vue и независимые утилиты, которые держат выбранный режим и вычисленную тему раздельно.
   image:
     light: ../screenshots/theme-mode-auto.png
     dark: ../screenshots/theme-mode-auto-dark.png
@@ -16,23 +16,24 @@ hero:
       text: Установить пакет
       link: '#install'
 features:
-  - title: Nuxt-first SSR
+  - title: SSR-путь для Nuxt
     details: Записывает data-theme, data-theme-mode, color-scheme и CSS-переменные иконок до монтирования Vue.
-  - title: Renderless Vue toggle
+  - title: Переключатель Vue без разметки
     details: Отдаёт mode, resolvedTheme, nextMode, label и actions, а разметка остаётся в вашем приложении.
-  - title: Core helpers
+  - title: Независимые утилиты
     details: Разбирают настройки, сохраняют режим, вычисляют тему и обновляют DOM-атрибуты из обычного TypeScript.
 ---
 
 <div class="landing-meta">
-  <span>Автоматический режим остаётся явным: в хранилище лежит <code>auto</code>, а вычисленная тема следует настройке ОС.</span>
-  <span>В v1 нет корневого экспорта: импортируйте только нужную точку входа для Nuxt, Vue или core.</span>
-  <span>Скриншоты ниже генерируются из закоммиченного исходника скриншотов, который используется и в README.</span>
+  <span>Сохранённый режим остаётся явным: <code>auto</code> хранится как <code>auto</code>, а вычисленная тема следует настройке ОС.</span>
+  <span>Импортируйте только ту точку входа Nuxt, Vue или core, которая реально нужна приложению.</span>
 </div>
 
 ## Установка из GitHub Packages {#install}
 
-Создайте `.npmrc` и добавьте реестр GitHub Packages:
+Один сценарий: подключите GitHub Packages, установите пакет и импортируйте только ту точку входа, которая реально нужна приложению.
+
+Добавьте реестр GitHub Packages в `.npmrc`:
 
 ::: code-group
 
@@ -42,7 +43,9 @@ features:
 
 :::
 
-Установите пакет из терминала:
+> Для чтения пакета может понадобиться токен с `read:packages`.
+
+Установите пакет:
 
 ::: code-group
 
@@ -52,7 +55,7 @@ npm install @alyldas/theme-mode
 
 :::
 
-Импортируйте CSS и точку входа для слоя приложения:
+Импортируйте CSS и нужную точку входа:
 
 ::: code-group
 
@@ -65,15 +68,47 @@ import '@alyldas/theme-mode/nuxt'
 
 ## Выберите точку входа
 
-| Точка входа                | Для чего нужна                                                        |
-| -------------------------- | --------------------------------------------------------------------- |
-| `@alyldas/theme-mode/nuxt` | Nuxt-приложения, где тема нужна до гидрации                           |
-| `@alyldas/theme-mode/vue`  | Vue-оболочки, свои кнопки, встроенные виджеты и тесты                 |
-| `@alyldas/theme-mode/core` | Независимые адаптеры, которым нужны только настройки, хранилище и DOM |
+Замените строку импорта выше одной из этих строк:
+
+<EntryPointCards
+:items="[
+{
+path: '@alyldas/theme-mode/nuxt',
+title: 'Модуль Nuxt',
+bestFor: 'Лучший вариант для Nuxt-приложений, где тема должна быть корректной ещё до гидрации.',
+details: 'Добавляет SSR-безопасный сценарий запуска и держит настройки согласованными.',
+      importLine: `import '@alyldas/theme-mode/nuxt'`,
+},
+{
+path: '@alyldas/theme-mode/vue',
+title: 'Композиционная функция Vue и переключатель',
+bestFor: 'Подходит для оболочек приложения, своих кнопок, виджетов и тестов.',
+details: 'Используйте общий контроллер или переключатель без собственной разметки внутри вашего интерфейса.',
+      importLine: `import '@alyldas/theme-mode/vue'`,
+},
+{
+path: '@alyldas/theme-mode/core',
+title: 'Независимые утилиты',
+bestFor: 'Подходит для адаптеров, которым нужны только разбор настроек, сохранение режима и DOM-запись.',
+details: 'Используйте из обычного TypeScript-кода без Vue.',
+      importLine: `import '@alyldas/theme-mode/core'`,
+},
+]"
+/>
 
 ## Настройка Nuxt
 
-```ts
+Начните с одного модуля. Опции добавляйте только тогда, когда нужны свои ключи, атрибуты или CSS-переменные.
+
+::: code-group
+
+```ts [минимальная настройка]
+export default defineNuxtConfig({
+  modules: ['@alyldas/theme-mode/nuxt'],
+})
+```
+
+```ts [расширенные опции]
 export default defineNuxtConfig({
   modules: ['@alyldas/theme-mode/nuxt'],
   themeMode: {
@@ -88,15 +123,17 @@ export default defineNuxtConfig({
 })
 ```
 
+:::
+
 ## Состояния
 
 <PreviewGallery
   :items="[
-    { src: '../screenshots/theme-mode-auto-dark.png', alt: 'Автоматический режим с тёмной темой' },
-    { src: '../screenshots/theme-mode-auto.png', alt: 'Автоматический режим со светлой темой' },
-    { src: '../screenshots/theme-mode-dark.png', alt: 'Превью тёмной темы' },
-    { src: '../screenshots/theme-mode-light.png', alt: 'Превью светлой темы' },
+    { src: '../screenshots/theme-mode-auto-dark.png', alt: 'Автоматический режим с тёмной темой', caption: 'Авто-режим с тёмной темой' },
+    { src: '../screenshots/theme-mode-auto.png', alt: 'Автоматический режим со светлой темой', caption: 'Авто-режим со светлой темой' },
+    { src: '../screenshots/theme-mode-dark.png', alt: 'Превью тёмной темы', caption: 'Явная тёмная тема' },
+    { src: '../screenshots/theme-mode-light.png', alt: 'Превью светлой темы', caption: 'Явная светлая тема' },
   ]"
 />
 
-Скриншоты выше генерируются из standalone-исходника, который закоммичен в репозитории.
+Скриншоты выше генерируются из отдельного примера, который закоммичен в репозитории.
