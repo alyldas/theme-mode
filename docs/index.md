@@ -2,11 +2,11 @@
 layout: home
 title: Theme Mode
 titleTemplate: Nuxt and Vue theme controller
-description: Theme Mode keeps automatic, dark, and light themes predictable across Nuxt SSR, Vue hydration, and plain TypeScript helpers.
+description: Theme Mode keeps Nuxt color mode, Vue toggles, and TypeScript helpers aligned across SSR, hydration, and client updates.
 hero:
   name: Theme Mode
-  text: Theme state without surprises
-  tagline: A tiny package for Nuxt, Vue, and framework-neutral code that keeps selected mode and resolved theme separate.
+  text: SSR-safe theme state for Nuxt and Vue
+  tagline: A Nuxt color mode module, Vue toggle primitives, and framework-neutral helpers that keep selected mode and resolved theme separate.
   image:
     light: ./screenshots/theme-mode-auto.png
     dark: ./screenshots/theme-mode-auto-dark.png
@@ -25,14 +25,15 @@ features:
 ---
 
 <div class="landing-meta">
-  <span>Automatic mode stays explicit: stored mode remains <code>auto</code>, resolved theme follows the OS.</span>
-  <span>No root export in v1: import only the Nuxt, Vue, or core entry point your app needs.</span>
-  <span>The preview images below are generated from the committed screenshot source used by README.</span>
+  <span>Stored mode stays explicit: <code>auto</code> remains <code>auto</code>, while the resolved theme follows the OS.</span>
+  <span>Import only the Nuxt, Vue, or core entry point your app actually uses.</span>
 </div>
 
 ## Install from GitHub Packages {#install}
 
-Create `.npmrc` and add the GitHub Packages registry:
+One flow: register GitHub Packages, install the package, then import only the entry point your app actually uses.
+
+Add the GitHub Packages registry to `.npmrc`:
 
 ::: code-group
 
@@ -42,7 +43,9 @@ Create `.npmrc` and add the GitHub Packages registry:
 
 :::
 
-Install the package from the terminal:
+> Package reads can require a token with `read:packages`.
+
+Install the package:
 
 ::: code-group
 
@@ -52,7 +55,7 @@ npm install @alyldas/theme-mode
 
 :::
 
-Import the CSS and the entry point for your app layer:
+Import the CSS and your entry point:
 
 ::: code-group
 
@@ -65,15 +68,47 @@ import '@alyldas/theme-mode/nuxt'
 
 ## Choose an entry point
 
-| Entry point                | Use it for                                                                      |
-| -------------------------- | ------------------------------------------------------------------------------- |
-| `@alyldas/theme-mode/nuxt` | Nuxt apps that need SSR-safe theme state before hydration                       |
-| `@alyldas/theme-mode/vue`  | Vue app shells, custom buttons, embedded widgets, and tests                     |
-| `@alyldas/theme-mode/core` | Framework-neutral adapters that only need parsing, persistence, and DOM helpers |
+Replace the entry-point import above with one of these lines:
+
+<EntryPointCards
+:items="[
+{
+path: '@alyldas/theme-mode/nuxt',
+title: 'Nuxt module',
+bestFor: 'Best for Nuxt apps that need theme state before hydration.',
+details: 'Adds the SSR-safe bootstrap path and keeps runtime options aligned.',
+      importLine: `import '@alyldas/theme-mode/nuxt'`,
+},
+{
+path: '@alyldas/theme-mode/vue',
+title: 'Vue composable and toggle',
+bestFor: 'Best for app shells, custom buttons, widgets, and tests.',
+details: 'Use the shared controller or the renderless toggle slot in your own UI.',
+      importLine: `import '@alyldas/theme-mode/vue'`,
+},
+{
+path: '@alyldas/theme-mode/core',
+title: 'Framework-neutral helpers',
+bestFor: 'Best for adapters that only need parsing, persistence, and DOM writes.',
+details: 'Use it from plain TypeScript when no Vue runtime is involved.',
+      importLine: `import '@alyldas/theme-mode/core'`,
+},
+]"
+/>
 
 ## Nuxt setup
 
-```ts
+Start with the module only. Add options when you need custom storage keys, attributes, or CSS variable prefixes.
+
+::: code-group
+
+```ts [minimal setup]
+export default defineNuxtConfig({
+  modules: ['@alyldas/theme-mode/nuxt'],
+})
+```
+
+```ts [extended options]
 export default defineNuxtConfig({
   modules: ['@alyldas/theme-mode/nuxt'],
   themeMode: {
@@ -88,15 +123,17 @@ export default defineNuxtConfig({
 })
 ```
 
+:::
+
 ## Preview states
 
 <PreviewGallery
   :items="[
-    { src: './screenshots/theme-mode-auto-dark.png', alt: 'Auto mode resolved to dark theme' },
-    { src: './screenshots/theme-mode-auto.png', alt: 'Auto mode resolved to light theme' },
-    { src: './screenshots/theme-mode-dark.png', alt: 'Dark mode preview' },
-    { src: './screenshots/theme-mode-light.png', alt: 'Light mode preview' },
+    { src: './screenshots/theme-mode-auto-dark.png', alt: 'Auto mode resolved to dark theme', caption: 'Auto mode resolved to dark theme' },
+    { src: './screenshots/theme-mode-auto.png', alt: 'Auto mode resolved to light theme', caption: 'Auto mode resolved to light theme' },
+    { src: './screenshots/theme-mode-dark.png', alt: 'Dark mode preview', caption: 'Explicit dark mode' },
+    { src: './screenshots/theme-mode-light.png', alt: 'Light mode preview', caption: 'Explicit light mode' },
   ]"
 />
 
-The preview images above are generated from the standalone screenshot source committed in the repository.
+The preview images above are generated from the standalone example committed in the repository.

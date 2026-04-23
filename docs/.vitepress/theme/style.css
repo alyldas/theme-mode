@@ -129,7 +129,7 @@
   color: var(--vp-c-text-2);
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 28px 0;
 }
 
@@ -142,16 +142,12 @@
 
 @media (max-width: 959px) {
   .vp-doc .landing-meta {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 639px) {
   .VPHome.VPHome {
     margin-bottom: 32px;
-  }
-
-  .vp-doc .landing-meta {
-    grid-template-columns: 1fr;
   }
 }

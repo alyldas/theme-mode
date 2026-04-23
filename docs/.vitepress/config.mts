@@ -4,7 +4,7 @@ const siteUrl = 'https://alyldas.github.io/theme-mode/'
 const previewImage = `${siteUrl}screenshots/theme-mode-auto.png`
 const title = 'Theme Mode - Nuxt and Vue theme controller'
 const description =
-  'Theme Mode keeps automatic, dark, and light themes predictable across Nuxt SSR, Vue hydration, and plain TypeScript helpers.'
+  'Theme Mode keeps Nuxt color mode, Vue toggles, and framework-neutral helpers aligned across SSR, hydration, and client updates.'
 const favicon =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23181713'/%3E%3Cpath d='M16 20h32v7H36v21h-8V27H16z' fill='%23fff'/%3E%3C/svg%3E"
 
@@ -55,7 +55,6 @@ export default defineConfig({
           copyright: 'MIT Licensed.',
         },
         lightModeSwitchTitle: 'Switch to light theme',
-        nav: [{ text: 'Install', link: '#install' }],
         outline: false,
         returnToTopLabel: 'Return to top',
         sidebar: false,
@@ -69,7 +68,7 @@ export default defineConfig({
       lang: 'ru-RU',
       title: 'Theme Mode',
       description:
-        'Theme Mode делает авто-, тёмную и светлую тему предсказуемыми в Nuxt SSR, Vue-гидрации и TypeScript-утилитах.',
+        'Theme Mode держит режим темы в Nuxt, переключатель Vue и независимые TypeScript-утилиты согласованными между SSR, гидрацией и клиентом.',
       themeConfig: {
         darkModeSwitchLabel: 'Тема',
         darkModeSwitchTitle: 'Переключить на тёмную тему',
@@ -82,7 +81,6 @@ export default defineConfig({
           copyright: 'Лицензия MIT.',
         },
         lightModeSwitchTitle: 'Переключить на светлую тему',
-        nav: [{ text: 'Установка', link: '#install' }],
         outline: false,
         returnToTopLabel: 'Вернуться наверх',
         sidebar: false,
@@ -94,9 +92,6 @@ export default defineConfig({
   },
   themeConfig: {
     logo: favicon,
-    search: {
-      provider: 'local',
-    },
   },
   head: [
     ['link', { rel: 'icon', href: favicon }],
