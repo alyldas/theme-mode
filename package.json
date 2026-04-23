@@ -22,8 +22,8 @@
   ],
   "files": [
     "dist",
-    "docs/demo.html",
-    "docs/screenshots"
+    "examples/demo/index.html",
+    "docs/public/screenshots"
   ],
   "exports": {
     "./core": {
@@ -47,7 +47,7 @@
     "build": "tsup && tsc -p tsconfig.build.json",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run coverage && npm run test:exports && npm run docs:build && npm run pack:dry",
     "coverage": "vitest run test/*.test.ts --coverage",
-    "docs:build": "vitepress build docs && node scripts/copy-pages-static.mjs",
+    "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs --host 127.0.0.1",
     "docs:preview": "vitepress preview docs --host 127.0.0.1",
     "format": "prettier --write .",

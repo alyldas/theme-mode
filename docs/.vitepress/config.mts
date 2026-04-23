@@ -33,7 +33,6 @@ export default defineConfig({
   base: '/theme-mode/',
   appearance: true,
   cleanUrls: false,
-  ignoreDeadLinks: [/demo$/],
   outDir: './.vitepress/dist',
   sitemap: {
     hostname: siteUrl,
@@ -56,10 +55,7 @@ export default defineConfig({
           copyright: 'MIT Licensed.',
         },
         lightModeSwitchTitle: 'Switch to light theme',
-        nav: [
-          { text: 'Install', link: '#install' },
-          { text: 'Demo', link: '/demo.html' },
-        ],
+        nav: [{ text: 'Install', link: '#install' }],
         outline: false,
         returnToTopLabel: 'Return to top',
         sidebar: false,
@@ -86,10 +82,7 @@ export default defineConfig({
           copyright: 'Лицензия MIT.',
         },
         lightModeSwitchTitle: 'Переключить на светлую тему',
-        nav: [
-          { text: 'Установка', link: '#install' },
-          { text: 'Демо', link: '/demo.html' },
-        ],
+        nav: [{ text: 'Установка', link: '#install' }],
         outline: false,
         returnToTopLabel: 'Вернуться наверх',
         sidebar: false,
