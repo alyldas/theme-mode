@@ -4,7 +4,14 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ['.typecheck/**', 'coverage/**', 'dist/**', 'node_modules/**'],
+    ignores: [
+      '.typecheck/**',
+      'coverage/**',
+      'dist/**',
+      'docs/.vitepress/cache/**',
+      'docs/.vitepress/dist/**',
+      'node_modules/**',
+    ],
   },
   ...tseslint.configs.recommended,
   prettier,

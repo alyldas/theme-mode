@@ -22,12 +22,8 @@
   ],
   "files": [
     "dist",
-    "docs",
-    "README.md",
-    "CONTRIBUTING.md",
-    "CHANGELOG.md",
-    "SECURITY.md",
-    "LICENSE"
+    "docs/demo.html",
+    "docs/screenshots"
   ],
   "exports": {
     "./core": {
@@ -49,8 +45,11 @@
   },
   "scripts": {
     "build": "tsup && tsc -p tsconfig.build.json",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run coverage && npm run test:exports && npm run pack:dry",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run coverage && npm run test:exports && npm run docs:build && npm run pack:dry",
     "coverage": "vitest run test/*.test.ts --coverage",
+    "docs:build": "vitepress build docs && node scripts/copy-pages-static.mjs",
+    "docs:dev": "vitepress dev docs --host 127.0.0.1",
+    "docs:preview": "vitepress preview docs --host 127.0.0.1",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "hooks:install": "node scripts/install-husky.cjs",
@@ -99,6 +98,7 @@
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.0",
+    "vitepress": "^1.6.4",
     "vitest": "^4.1.5",
     "vue": "^3.5.32"
   }
