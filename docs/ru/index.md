@@ -15,9 +15,6 @@ hero:
     - theme: brand
       text: Установить пакет
       link: '#install'
-    - theme: alt
-      text: Открыть демо
-      link: ../demo.html
 features:
   - title: Nuxt-first SSR
     details: Записывает data-theme, data-theme-mode, color-scheme и CSS-переменные иконок до монтирования Vue.
@@ -30,7 +27,7 @@ features:
 <div class="landing-meta">
   <span>Автоматический режим остаётся явным: в хранилище лежит <code>auto</code>, а вычисленная тема следует настройке ОС.</span>
   <span>В v1 нет корневого экспорта: импортируйте только нужную точку входа для Nuxt, Vue или core.</span>
-  <span>Скриншоты ниже генерируются из той же статической демо-страницы, что используется в README.</span>
+  <span>Скриншоты ниже генерируются из закоммиченного исходника скриншотов, который используется и в README.</span>
 </div>
 
 ## Установка из GitHub Packages {#install}
@@ -102,4 +99,4 @@ export default defineNuxtConfig({
   ]"
 />
 
-Откройте статическое превью в [demo.html](../demo.html).
+Скриншоты выше генерируются из standalone-исходника, который закоммичен в репозитории.

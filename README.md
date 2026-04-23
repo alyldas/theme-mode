@@ -11,23 +11,23 @@
 
 ## Screenshots
 
-Generated from [docs/demo.html](docs/demo.html).
+Generated from [examples/demo/index.html](examples/demo/index.html).
 
 ### Auto / light
 
-![Theme Mode auto preview](docs/screenshots/theme-mode-auto.png)
+![Theme Mode auto preview](docs/public/screenshots/theme-mode-auto.png)
 
 ### Auto / dark
 
-![Theme Mode auto dark preview](docs/screenshots/theme-mode-auto-dark.png)
+![Theme Mode auto dark preview](docs/public/screenshots/theme-mode-auto-dark.png)
 
 ### Dark
 
-![Theme Mode dark preview](docs/screenshots/theme-mode-dark.png)
+![Theme Mode dark preview](docs/public/screenshots/theme-mode-dark.png)
 
 ### Light
 
-![Theme Mode light preview](docs/screenshots/theme-mode-light.png)
+![Theme Mode light preview](docs/public/screenshots/theme-mode-light.png)
 
 ## What This Package Does
 
@@ -295,7 +295,7 @@ This repository keeps the package source-only. Do not commit generated output:
 
 `dist` is created by `npm run build`, `npm run test:exports`, `npm run pack:dry`, and `npm run prepare`.
 
-README screenshot PNGs are committed documentation assets. Regenerate them from [docs/demo.html](docs/demo.html) when the demo UI changes.
+README screenshot PNGs are committed documentation assets. Regenerate them from [examples/demo/index.html](examples/demo/index.html) when the demo UI changes.
 
 ## Release Checklist
 

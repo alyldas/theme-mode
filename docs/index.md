@@ -15,9 +15,6 @@ hero:
     - theme: brand
       text: Install package
       link: '#install'
-    - theme: alt
-      text: Open demo
-      link: ./demo.html
 features:
   - title: Nuxt-first SSR
     details: Writes data-theme, data-theme-mode, color-scheme, and icon CSS variables before Vue mounts.
@@ -30,7 +27,7 @@ features:
 <div class="landing-meta">
   <span>Automatic mode stays explicit: stored mode remains <code>auto</code>, resolved theme follows the OS.</span>
   <span>No root export in v1: import only the Nuxt, Vue, or core entry point your app needs.</span>
-  <span>The screenshots below are generated from the same static demo page used by README.</span>
+  <span>The preview images below are generated from the committed screenshot source used by README.</span>
 </div>
 
 ## Install from GitHub Packages {#install}
@@ -102,4 +99,4 @@ export default defineNuxtConfig({
   ]"
 />
 
-Open the static preview in [demo.html](./demo.html).
+The preview images above are generated from the standalone screenshot source committed in the repository.
