@@ -1,41 +1,86 @@
 ---
-title: Theme Mode - theme controller for Nuxt and Vue
-description: Theme Mode is a Nuxt-first theme controller with Vue and framework-neutral entry points.
+layout: home
+title: Theme Mode
+titleTemplate: Nuxt and Vue theme controller
+description: Theme Mode keeps automatic, dark, and light themes predictable across Nuxt SSR, Vue hydration, and plain TypeScript helpers.
+hero:
+  name: Theme Mode
+  text: Theme state without surprises
+  tagline: A tiny package for Nuxt, Vue, and framework-neutral code that keeps selected mode and resolved theme separate.
+  image:
+    light: ./screenshots/theme-mode-auto.png
+    dark: ./screenshots/theme-mode-auto-dark.png
+    alt: Theme Mode automatic theme preview
+  actions:
+    - theme: brand
+      text: Install package
+      link: '#install'
+    - theme: alt
+      text: Open demo
+      link: ./demo.html
+features:
+  - title: Nuxt-first SSR
+    details: Writes data-theme, data-theme-mode, color-scheme, and icon CSS variables before Vue mounts.
+  - title: Renderless Vue toggle
+    details: Exposes mode, resolvedTheme, nextMode, label, and actions while your app owns the markup.
+  - title: Core helpers
+    details: Parse options, persist mode, resolve preference, and update DOM attributes from plain TypeScript.
 ---
 
-<Landing>
-  <template #registry>
+<div class="landing-meta">
+  <span>Automatic mode stays explicit: stored mode remains <code>auto</code>, resolved theme follows the OS.</span>
+  <span>No root export in v1: import only the Nuxt, Vue, or core entry point your app needs.</span>
+  <span>The screenshots below are generated from the same static demo page used by README.</span>
+</div>
 
-```ini
+## Install from GitHub Packages {#install}
+
+Create `.npmrc` and add the GitHub Packages registry:
+
+::: code-group
+
+```ini [.npmrc]
 @alyldas:registry=https://npm.pkg.github.com
 ```
 
-  </template>
+:::
 
-<template #install>
+Install the package from the terminal:
 
-```sh
+::: code-group
+
+```sh [terminal]
 npm install @alyldas/theme-mode
 ```
 
-  </template>
+:::
 
-<template #imports>
+Import the CSS and the entry point for your app layer:
 
-```ts
+::: code-group
+
+```ts [theme-mode.ts]
 import '@alyldas/theme-mode/style.css'
 import '@alyldas/theme-mode/nuxt'
 ```
 
-  </template>
+:::
 
-<template #ssr-en>
+## Choose an entry point
 
-<!-- prettier-ignore -->
+| Entry point                | Use it for                                                                      |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| `@alyldas/theme-mode/nuxt` | Nuxt apps that need SSR-safe theme state before hydration                       |
+| `@alyldas/theme-mode/vue`  | Vue app shells, custom buttons, embedded widgets, and tests                     |
+| `@alyldas/theme-mode/core` | Framework-neutral adapters that only need parsing, persistence, and DOM helpers |
+
+## Nuxt setup
+
 ```ts
 export default defineNuxtConfig({
   modules: ['@alyldas/theme-mode/nuxt'],
-  themeMode: { // Before Vue mounts
+  themeMode: {
+    // Before Vue mounts
     defaultMode: 'auto',
     fallbackTheme: 'dark', // color-scheme: native controls
     attribute: 'data-theme', // data-theme: light | dark
@@ -46,24 +91,15 @@ export default defineNuxtConfig({
 })
 ```
 
-  </template>
+## Preview states
 
-<template #ssr-ru>
+<PreviewGallery
+  :items="[
+    { src: './screenshots/theme-mode-auto-dark.png', alt: 'Auto mode resolved to dark theme' },
+    { src: './screenshots/theme-mode-auto.png', alt: 'Auto mode resolved to light theme' },
+    { src: './screenshots/theme-mode-dark.png', alt: 'Dark mode preview' },
+    { src: './screenshots/theme-mode-light.png', alt: 'Light mode preview' },
+  ]"
+/>
 
-<!-- prettier-ignore -->
-```ts
-export default defineNuxtConfig({
-  modules: ['@alyldas/theme-mode/nuxt'],
-  themeMode: { // До монтирования Vue
-    defaultMode: 'auto',
-    fallbackTheme: 'dark', // color-scheme: нативные элементы браузера
-    attribute: 'data-theme', // data-theme: light | dark
-    modeAttribute: 'data-theme-mode', // data-theme-mode: auto | dark | light
-    cssVariablePrefix: 'theme-mode', // --theme-mode-*: состояние переключателя
-    storageKey: 'theme',
-  },
-})
-```
-
-  </template>
-</Landing>
+Open the static preview in [demo.html](./demo.html).

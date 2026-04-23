@@ -1,11 +1,11 @@
 import type { Theme } from 'vitepress'
-import Landing from './Landing.vue'
-import Layout from './Layout.vue'
+import DefaultTheme from 'vitepress/theme-without-fonts'
+import PreviewGallery from './PreviewGallery.vue'
 import './style.css'
 
 export default {
-  Layout,
-  enhanceApp({ app }) {
-    app.component('Landing', Landing)
+  extends: DefaultTheme,
+  enhanceApp(context) {
+    context.app.component('PreviewGallery', PreviewGallery)
   },
 } satisfies Theme

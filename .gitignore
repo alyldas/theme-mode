@@ -7,4 +7,6 @@ dist
 docs/.vitepress/cache
 docs/.vitepress/dist
 node_modules
+output/
+.DS_Store
 *.tgz

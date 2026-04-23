@@ -22,14 +22,8 @@
   ],
   "files": [
     "dist",
-    "docs",
-    "!docs/.vitepress/cache",
-    "!docs/.vitepress/dist",
-    "README.md",
-    "CONTRIBUTING.md",
-    "CHANGELOG.md",
-    "SECURITY.md",
-    "LICENSE"
+    "docs/demo.html",
+    "docs/screenshots"
   ],
   "exports": {
     "./core": {
