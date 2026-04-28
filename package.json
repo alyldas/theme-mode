@@ -83,7 +83,7 @@
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.5.0",
+    "@commitlint/cli": "^20.5.2",
     "@commitlint/config-conventional": "^20.5.0",
     "@nuxt/schema": "^4.4.2",
     "@types/node": "^25.6.0",
