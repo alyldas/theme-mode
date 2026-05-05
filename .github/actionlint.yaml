@@ -6,3 +6,4 @@ self-hosted-runner:
     - release-deploy
     - theme-mode-ci
     - theme-mode-dependabot
+    - theme-mode-release-deploy

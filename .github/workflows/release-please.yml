@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   release-please:
-    runs-on: [self-hosted, linux, x64, release-deploy]
+    runs-on: theme-mode-release-deploy
     steps:
       - name: Run Release Please
         id: release
@@ -35,6 +35,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22.22.2
+          package-manager-cache: false
 
       - name: Install dependencies
         if: ${{ steps.release.outputs.release_created == 'true' }}
