@@ -5,3 +5,4 @@ self-hosted-runner:
     - x64
     - release-deploy
     - theme-mode-ci
+    - theme-mode-dependabot
