@@ -82,6 +82,11 @@
       "optional": true
     }
   },
+  "overrides": {
+    "vitepress": {
+      "vite": "^6.4.2"
+    }
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
