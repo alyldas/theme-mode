@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/alyldas/theme-mode/compare/v1.0.1...v1.0.2) (2026-05-17)
+
+
+### Bug Fixes
+
+* **deps:** обновлены уязвимые транзитивные зависимости ([e1cbe29](https://github.com/alyldas/theme-mode/commit/e1cbe29e9a533b593954d87b342e80a0cce84e1b))
+* **deps:** обновлены уязвимые транзитивные зависимости ([b845f69](https://github.com/alyldas/theme-mode/commit/b845f69f561ec90096e7830c8fc4675ee55710ef))
+
 ## 1.0.1
 
 - Release README badge fix.
